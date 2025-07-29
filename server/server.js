@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import teamRoutes from "./routes/team.js";
 import express from "express";
 import session from "express-session";
 import pg from "connect-pg-simple";
@@ -42,6 +43,7 @@ app.use(
 
 // Routes
 app.use("/auth", authFunc);
+app.use("/teams", teamRoutes);
 
 app.get("/", (req, res) => res.send("Server is live 🚀"));
 
