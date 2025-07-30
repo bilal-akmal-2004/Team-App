@@ -13,10 +13,15 @@ import authFunc from "./routes/auth.js";
 const pgSession = pg(session);
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://team-app-client.vercel.app",
+];
+
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
