@@ -3,7 +3,10 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useTheme } from "../context/ThemeContext";
+
 export default function Teams() {
+  const { darkMode } = useTheme();
   const [teams, setTeams] = useState([]);
   const [newMembers, setNewMembers] = useState({});
   const [newTasks, setNewTasks] = useState({});
@@ -80,14 +83,28 @@ export default function Teams() {
   };
 
   return (
-    <div className="p-4">
+    <div
+      className={`min-h-screen p-4 transition-colors duration-500 ${
+        darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
+      } flex flex-col items-center`}
+    >
       <ToastContainer />
-      <h2 className="text-xl font-bold mb-4">Teams</h2>
-      <div className="space-y-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">Teams</h2>
+
+      <div className="w-full max-w-2xl space-y-6">
         {teams.map((team) => (
-          <div key={team.id} className="border p-4 rounded shadow-sm">
-            <h3 className="text-lg font-semibold">{team.name}</h3>
-            <p className="text-sm text-gray-600 mb-2">
+          <div
+            key={team.id}
+            className={`rounded-lg p-6 shadow-md transition-colors duration-300 ${
+              darkMode ? "bg-gray-800" : "bg-white"
+            }`}
+          >
+            <h3 className="text-xl font-semibold mb-1">{team.name}</h3>
+            <p
+              className={`text-sm mb-4 ${
+                darkMode ? "text-gray-300" : "text-gray-600"
+              }`}
+            >
               Created By: {team.created_by}
             </p>
 
@@ -96,24 +113,32 @@ export default function Teams() {
               <input
                 type="text"
                 placeholder="Member Name"
-                className="border p-2 rounded w-full"
+                className={`p-2 rounded w-full border outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white border-gray-600"
+                    : "bg-white text-black border-gray-300"
+                }`}
                 value={newMembers[team.id] || ""}
                 onChange={(e) => handleMemberChange(team.id, e.target.value)}
               />
               <button
                 onClick={() => handleAddMember(team.id)}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
               >
-                Add Member
+                Add
               </button>
             </div>
 
             {/* Add Task Form */}
-            <div className="space-y-2 mb-2">
+            <div className="space-y-3">
               <input
                 type="text"
                 placeholder="Task Title"
-                className="border p-2 rounded w-full"
+                className={`p-2 rounded w-full border outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white border-gray-600"
+                    : "bg-white text-black border-gray-300"
+                }`}
                 value={newTasks[team.id]?.title || ""}
                 onChange={(e) =>
                   handleTaskInput(team.id, "title", e.target.value)
@@ -121,7 +146,11 @@ export default function Teams() {
               />
               <textarea
                 placeholder="Task Description"
-                className="border p-2 rounded w-full"
+                className={`p-2 rounded w-full border outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white border-gray-600"
+                    : "bg-white text-black border-gray-300"
+                }`}
                 value={newTasks[team.id]?.description || ""}
                 onChange={(e) =>
                   handleTaskInput(team.id, "description", e.target.value)
@@ -130,7 +159,11 @@ export default function Teams() {
               <input
                 type="text"
                 placeholder="Assign To (username)"
-                className="border p-2 rounded w-full"
+                className={`p-2 rounded w-full border outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white border-gray-600"
+                    : "bg-white text-black border-gray-300"
+                }`}
                 value={newTasks[team.id]?.assignedTo || ""}
                 onChange={(e) =>
                   handleTaskInput(team.id, "assignedTo", e.target.value)
@@ -138,7 +171,11 @@ export default function Teams() {
               />
               <input
                 type="date"
-                className="border p-2 rounded w-full"
+                className={`p-2 rounded w-full border outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white border-gray-600"
+                    : "bg-white text-black border-gray-300"
+                }`}
                 value={newTasks[team.id]?.dueDate || ""}
                 onChange={(e) =>
                   handleTaskInput(team.id, "dueDate", e.target.value)
@@ -146,7 +183,7 @@ export default function Teams() {
               />
               <button
                 onClick={() => handleAddTask(team.id)}
-                className="bg-green-600 text-white px-4 py-2 rounded w-full"
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full transition"
               >
                 Add Task
               </button>

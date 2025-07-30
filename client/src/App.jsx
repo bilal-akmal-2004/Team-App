@@ -15,11 +15,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const { darkMode, toggleTheme } = useTheme();
+  const isLoggedIn = localStorage.getItem("user");
 
   return (
     <div>
       <BrowserRouter>
-        <Navbar />
+        {isLoggedIn ? <Navbar /> : <></>}
+
         <Routes>
           <Route
             path="/login"
