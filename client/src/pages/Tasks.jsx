@@ -18,9 +18,12 @@ export default function Tasks() {
       if (teamId) params.teamId = teamId;
       if (userName) params.userName = userName;
 
-      const res = await axios.get("http://localhost:5000/teams/tasks", {
-        params,
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/teams/tasks`,
+        {
+          params,
+        }
+      );
       setTasks(res.data);
     } catch (err) {
       toast.error("Failed to fetch tasks");

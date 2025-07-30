@@ -17,7 +17,7 @@ export default function AddTeam() {
     }
 
     try {
-      await axios.post("http://localhost:5000/teams/create", {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/teams/create`, {
         name,
         created_by: email,
       });
