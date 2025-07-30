@@ -14,7 +14,7 @@ export default function Teams() {
   // Fetch all teams
   useEffect(() => {
     axios
-      .get("http://localhost:5000/teams")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/teams`)
       .then((res) => setTeams(res.data))
       .catch((err) => {
         toast.error("Failed to fetch teams.");
@@ -36,10 +36,13 @@ export default function Teams() {
     if (!userName) return toast.warn("Please enter a member name.");
 
     try {
-      await axios.post("http://localhost:5000/teams/add-member", {
-        teamId,
-        userName,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/teams/add-member`,
+        {
+          teamId,
+          userName,
+        }
+      );
       toast.success(`Added ${userName} to team`);
       setNewMembers((prev) => ({ ...prev, [teamId]: "" }));
     } catch (err) {
@@ -67,7 +70,7 @@ export default function Teams() {
     }
 
     try {
-      await axios.post("http://localhost:5000/teams/task", {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/teams/task`, {
         title: task.title,
         description: task.description,
         teamId,
